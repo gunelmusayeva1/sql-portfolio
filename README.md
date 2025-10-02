@@ -1,1 +1,21 @@
-# sql-portfolio
+<h1>Hi, I'm Gunel! <br/><a href="https://github.com/gunelmusayeva1">SQL & PL/SQL Developer | Data Analyst </a>
+  
+<h2> Projects:</h2>
+
+- <b>PL/SQL</b>
+  - [SQL Tasks](https://github.com/gunelmusayeva1/SQL-Portfolio/blob/main/tasks.sql)
+- <b>Oracle SQL</b>
+  - [Image Analysis Middleware](https://github.com/joshmadakor1/4chan-Image-Analysis-Middleware-C964) <b><i>(Potentially NSFW)</b></i>
+- <b>PowerBI</b>
+  - [Windows EventLog: Failed RDP Logins Source IP to full GeoData Conversion](https://github.com/joshmadakor1/Sentinel-Lab)
+
+
+<h2> 🤳 Connect with me:</h2>
+
+
+[<img align="left" alt="JoshMadakor | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" />][linkedin]
+
+
+[linkedin]: https://linkedin.com/in/gunel-musayeva-aa88651aa
+
+
