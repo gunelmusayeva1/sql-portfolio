@@ -5,7 +5,7 @@
 - <b>PL/SQL</b>
   - [SQL Tasks](https://github.com/gunelmusayeva1/SQL-Portfolio/blob/main/tasks.sql)
 - <b>Oracle SQL</b>
-  - [Image Analysis Middleware](https://github.com/joshmadakor1/4chan-Image-Analysis-Middleware-C964) <b><i>(Potentially NSFW)</b></i>
+  - [SQL Tasks](https://github.com/gunelmusayeva1/sql-portfolio/blob/main/tasks.sql)
 - <b>PowerBI</b>
   - [Windows EventLog: Failed RDP Logins Source IP to full GeoData Conversion](https://github.com/joshmadakor1/Sentinel-Lab)
 
