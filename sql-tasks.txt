@@ -1,0 +1,214 @@
+1.c Hər bir təcrübəçi işi girdiyi tarixdən 6 ay sonra ilk maaşını alır. Əgər 6 ay sonrakı tarix ayın 1-dən fərqli günə düşərsə, onda maaşı növbəti ayın 1-i alır. Employees cədvəlindəki hire_date sütunu hər bir işçi üçün təcrübəyə girdiyi tarixdir. Nəticədə işçinin soyadı, maaşı və ilk maaş aldığı tarixi çıxarın.  (7 bal) Tarixin formatı : DD.MM.YYYY olmalıdır.
+
+select
+     last_name,
+     salary,
+     hire_date,
+     add_months(hire_date,6),
+     to_char(last_day(add_months(hire_date,6))+1,'dd.mm.yyyy')
+from hr.employees;
+
+
+2. Hansı şəhərlərdə heç bir işçi işləmirsə, həmin şəhərlərin adlarını çıxaran sql sorğusu yazın. (duplikatları silin)
+
+select 
+    distinct city
+from hr.locations l 
+    left join hr.departments d on l.location_id = d.location_id
+    left join hr.employees e on d.department_id = e.department_id
+where employee_id is null;
+
+3. Hər bir işçinin öz ölkəsi üzrə neçənci işə girdiyini müəyyən edin.
+
+select
+    first_name,
+    hire_date,
+    country_name,
+    dense_rank() over (partition by country_name order by hire_date) as dr
+from hr.employees e 
+    left join hr.departments d on e.department_id = d.department_id
+    left join hr.locations l on d.location_id = l.location_id
+    left join hr.countries c on l.country_id = c.country_id;
+
+4. Hansı işçilərin menecerləri işçinin özündən daha aşağı maaş alırsa, həmin işçilərin adlarını və menecerlərinin adlarını çıxaran sql sorğusu yazın (10 bal) 
+
+select
+    e1.first_name,
+    e1.salary,
+    e2.first_name,
+    e2.salary
+from hr.employees e1 join hr.employees e2 on e1.manager_id = e2.employee_id
+    where e2.salary < e1.salary;
+
+5. Hər regionda yerləşən ölkələrin sayını çıxaran SQL yazın. Nəticədə iki sütun olacaq: region_id, count_country.
+
+select
+    region_id,
+    count(*) as count_country
+from hr.regions
+group by region_id;
+
+6. Hər bir işçinin salary üzrə azdan çoxa sıralamada öz JOB_İD-si üzrə neçənci olduğunu göstərən SQL yazın.
+
+select 
+    first_name,
+    job_id,
+    row_number() over (order by salary asc)
+from hr.employees;
+
+7. Hər bir işçinin qarşısında həmin işçinin həmin ildə işə girən neçənci işçi olduğunu çıxaran SQL yazın.
+
+select
+    first_name,
+    extract (year from hire_date) as hd,
+    row_number() over (partition by extract (year from hire_date) order by hire_date) as rn
+from hr.employees;
+
+8. Hər bir işçinin qarşısında həmin işçinin özündən (employee_id-yə görə sıralanmada) 2 əvvəl və 3 sonra gələn (2 sətr üzrə) işçilərin əmək haqqılarının cəmini tapan SQL yazın.
+
+select
+    employee_id,
+    salary,
+    lag(salary,2,0) over(order by employee_id) + lead(salary,3,0) over(order by employee_id)
+from hr.employees;
+
+9. Hər bir işçinin qarşısına həmin işçinin işlədiyi ölkədə işləyənlərdən ilk işə girən işçinin işə girmə tarixini çıxaran SQL yazın. / MIN() funksiyasi ilə /
+
+select
+    first_name,
+    country_name,
+    hire_date,
+    min(hire_date) over(partition by country_name order by hire_date)
+from hr.countries c 
+left join hr.locations l on c.country_id = l.country_id
+left join hr.departments d on l.location_id = d.location_id
+left join hr.employees e on d.department_id = e.department_id;
+
+10. Ən çox işçisi olan departamenti tapın.
+
+select department_name,
+    count(*)
+from hr.employees e left join hr.departments d on e.department_id = d.department_id
+group by department_name
+order by count(*) desc fetch first 1 rows only;
+
+11. Əgər müəssisə daxilində şöbələr üzrə şahmat turniri keçirilərsə (oyunlar ancaq müxtəlif şöbələrin işçiləri arasında olacaq və hər şöbənin hər bir əməkdaşı digər bütün şöbələrin bütün əməkdaşları ilə oynayacaq), keçiriləcək hər bir oyunun hər iki oyunçusunun adlarını qarşı-qarşıya çıxaran sql sorğusu tərtib edin.
+
+select
+    e1.first_name || ' ' || e1.last_name as player_1,
+    e2.first_name || ' ' || e2.last_name as player_2,
+    e1.department_id,
+    e2.department_id
+from hr.employees e1 cross join hr.employees e2 
+where e1.department_id != e2.department_id
+    and e1.employee_id <> e2.employee_id
+order by e1.department_id, e2.department_id;
+
+12.  İşçiləri əmək haqqılarının məbləğinə görə çoxdan aza doğru sıralasaq, sondan əvvəlki gələn işçinin əmək haqqını  göstərən sql sorğusu tərtib edin.  
+
+select max(salary) from hr.employees where salary < (select max(salary) from hr.employees);
+
+13. Menecer olmayan işçiləri çıxaran sql sorğusu tərtib edin. 
+
+select 
+    first_name
+from hr.employees 
+where employee_id not in (select manager_id from hr.employees where manager_id is not null);
+
+14. Departamentlər arasında orta əmək haqqı ən kiçik olan departamentin adını və orta əmək haqqını çıxaran sql sorğusu tərtib edin.  
+
+select 
+    department_name,
+    avg(salary)
+from hr.departments d left join hr.employees e on e.department_id = d.department_id
+group by department_name
+order by avg(salary) asc fetch first 1 rows only;
+
+select 
+    department_name, 
+    avg_salary 
+from (select 
+           d.department_name,
+           avg(e.salary) as avg_salary
+      from hr.departments d 
+      left join hr.employees e on e.department_id = d.department_id
+      group by d.department_name) 
+      where avg_salary = (select min(avg_salary) from (select 
+                                                          avg(e.salary) as avg_salary
+                                                     from hr.departments d 
+                                                     left join hr.employees e on e.department_id = d.department_id
+                                                     group by d.department_name));
+
+15. Employees cədvəlində 107 sətr var. Salary üzrə siralama verdikdə düz ortaya düşən sətri çıxaran sql sorğusu tərtib edin.  
+
+select
+    *
+from (select 
+          first_name,
+          last_name,
+          salary,
+          row_number() over (order by salary) as rn from hr.employees)
+where rn = (select 
+                round(count(employee_id)/2) 
+            from hr.employees);
+
+16. Hər departamentdə ilk işə qəbul olunan işçilərin siyahısını (first_name, last_name, hire_date) çıxaran sql sorğusu tərtib edin. 
+
+select
+    first_name,
+    last_name,
+    hire_date
+from (select
+          first_name,
+          last_name,
+          hire_date,
+          department_id,
+          row_number() over (partition by department_id order by hire_date) as rn
+      from hr.employees
+    )
+where rn = 1;
+
+17. Employees və Departments cədvəllərindən istifadə etmklə işçilərinin orta maaşı, işçilərinin maksimal maaşının yarısından kiçik olan departamentdə işləyən əməkdaşları çıxaran SQL yazın.  
+
+select 
+    * 
+from
+    (select 
+         e.*,
+         round(avg(e.salary) over(partition by e.department_id),1) as avg_salary,
+         max(e.salary) over(partition by e.department_id) as max_salary
+     from hr.employees e join hr.departments d on e.department_id = d.department_id)
+     where avg_salary < max_salary/2
+
+18. Ilk ən kiçik 3 departamentə uyğun işçilərin last_name ve department_name-lərini  çixarin. 
+
+select
+    e.department_id,
+    e.last_name,
+    d.department_name
+from hr.employees e 
+join hr.departments d on e.department_id = d.department_id
+where e.department_id in (select 
+                            department_id
+                        from ( select 
+                                   department_id,
+                                   count(employee_id)
+                               from hr.employees 
+                               group by department_id
+                               order by count(employee_id) asc fetch first 3 rows only))
+;
+
+19. Hər il üzrə həmin ildəki aylarda işə girmə saylarının orta qiymətini çıxaran SQL yazın. Məsələn: 2020-ci ilin yanvarinda 5 adam işə girib, fevralinda 3, dekabrında 1; 2021-ci ilin yanvarında 2, aprelində 6 adam işə giribsə, nəticə olacaq: 2020 - 3    2021 - 4  
+
+select 
+    il,
+    avg(employee_count) 
+from (select
+           extract (year from hire_date) as il,
+           count(hire_date) as employee_count
+      from hr.employees
+      group by extract (year from hire_date))
+group by il;
+
+
+
