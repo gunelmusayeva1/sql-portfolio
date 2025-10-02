@@ -5,7 +5,7 @@
 - <b>PL/SQL</b>
   - [SQL Tasks](https://github.com/gunelmusayeva1/SQL-Portfolio/blob/main/tasks.sql)
 - <b>Oracle SQL</b>
-  - [SQL Tasks](https://github.com/gunelmusayeva1/sql-portfolio/blob/main/tasks.sql)
+  - [SQL Tasks](https://github.com/gunelmusayeva1/sql-portfolio/blob/main/sql-tasks.sql)
 - <b>PowerBI</b>
   - [Windows EventLog: Failed RDP Logins Source IP to full GeoData Conversion](https://github.com/joshmadakor1/Sentinel-Lab)
 
