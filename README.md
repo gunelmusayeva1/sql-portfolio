@@ -7,7 +7,7 @@
 - <b>Oracle SQL</b>
   - [SQL Tasks](https://github.com/gunelmusayeva1/sql-portfolio/blob/main/sql-tasks.txt)
 - <b>PowerBI</b>
-  - [Windows EventLog: Failed RDP Logins Source IP to full GeoData Conversion](https://github.com/joshmadakor1/Sentinel-Lab)
+  - [Power BI Project](https://github.com/gunelmusayeva1/sql-portfolio/blob/main/power-bi.pbix)
 
 
 <h2> 🤳 Connect with me:</h2>
