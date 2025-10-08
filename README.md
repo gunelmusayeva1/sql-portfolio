@@ -7,7 +7,9 @@
 - <b>Oracle SQL</b>
   - [SQL Tasks](https://github.com/gunelmusayeva1/sql-portfolio/blob/main/sql-tasks.txt)
 - <b>PowerBI</b>
-  - [Power BI Project](https://github.com/gunelmusayeva1/sql-portfolio/blob/main/power-bi.pbix)
+  - [Power BI Project]
+  - (https://github.com/gunelmusayeva1/sql-portfolio/blob/main/power-bi.pbix)
+  - (https://github.com/gunelmusayeva1/sql-portfolio/blob/main/power-bi.pdf)
 
 
 <h2> 🤳 Connect with me:</h2>
