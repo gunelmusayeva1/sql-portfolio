@@ -3,7 +3,7 @@
 <h2> Projects:</h2>
 
 - <b>PL/SQL</b>
-  - 
+  - [PL/SQL - Project](https://github.com/gunelmusayeva1/sql-portfolio/blob/main/Project1.txt)
 - <b>Oracle SQL</b>
   - [SQL Tasks](https://github.com/gunelmusayeva1/sql-portfolio/blob/main/sql-tasks.txt)
 - <b>PowerBI</b>
